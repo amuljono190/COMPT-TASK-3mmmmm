@@ -1,0 +1,68 @@
+import random
+
+choices = ["rock", "paper", "scissors"]
+
+player_score = 0
+monster_score = 0
+
+print("ROCK PAPER SCISSORS")
+print("You are fighting the monster!")
+print("First to 3 points wins!")
+print()
+
+while player_score < 3 and monster_score < 3:
+
+    print("Choose:")
+    print("1. Rock")
+    print("2. Paper")
+    print("3. Scissors")
+
+    player_choice = input("Enter 1, 2, or 3: ")
+
+    if player_choice == "1":
+        player = "rock"
+    elif player_choice == "2":
+        player = "paper"
+    elif player_choice == "3":
+        player = "scissors"
+    else:
+        print("Invalid choice. Try again!")
+        print()
+        continue
+
+    monster = random.choice(choices)
+
+    print()
+    print("You chose:", player)
+    print("The monster chose:", monster)
+    print()
+
+    if player == monster:
+        print("It's a tie!")
+
+    elif player == "rock" and monster == "scissors":
+        print("Rock beats scissors! You win!")
+        player_score = player_score + 1
+
+    elif player == "paper" and monster == "rock":
+        print("Paper beats rock! You win!")
+        player_score = player_score + 1
+
+    elif player == "scissors" and monster == "paper":
+        print("Scissors beats paper! You win!")
+        player_score = player_score + 1
+
+    else:
+        print("The monster wins!")
+        monster_score = monster_score + 1
+
+    print()
+    print("Your score:", player_score)
+    print("Monster score:", monster_score)
+    print("--------------------------------")
+    print()
+
+if player_score == 3:
+    print("🎉 YOU DEFEATED THE MONSTER! 🎉")
+else:
+    print("💀 THE MONSTER DEFEATED YOU! 💀")
