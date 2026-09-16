@@ -65,12 +65,12 @@ while True:
         print()
 
     if player_score == 3:
-        print("🎉 YOU DEFEATED THE MONSTER! 🎉")
+        print("YOU DEFEATED THE MONSTER!")
         print("You escape into the cave!")
         break
 
     else:
-        print("💀 THE MONSTER DEFEATED YOU! 💀")
+        print("THE MONSTER DEFEATED YOU!")
         print("The monster catches you...")
         print()
         print("The game is restarting...")
