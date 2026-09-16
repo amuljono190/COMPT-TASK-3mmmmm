@@ -1,6 +1,6 @@
 import random
 
-words = ["apple", "banana", "mango", "orange", "grapes", "papaya"]
+words = ["apple", "banana", "mango", "orange", "grapes", "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
 
 word = random.choice(words)
 guessed = []
@@ -58,7 +58,7 @@ hangman = [
     """
 ]
 
-print("Welcome to Hangman!")
+print("Guess the word!")
 print("Hint: The word is a fruit.")
 
 while wrong_guesses < max_attempts:
@@ -76,7 +76,7 @@ while wrong_guesses < max_attempts:
 
     if "_" not in display:
         print("Congratulations! You won!")
-        print("The fruit was:", word)
+        print("You completed the puzzle and can now proceed to the next room.")
         break
 
     guess = input("Guess a letter: ").lower()
@@ -98,6 +98,6 @@ while wrong_guesses < max_attempts:
         print("Wrong guess!")
 
 else:
-    print(hangman[wrong_guesses])
+    print(hangman[-1])
     print("Game Over!")
-    print("The fruit was:", word)
+    print("You failed to guess the word.")
