@@ -60,13 +60,13 @@ def start_intro():
             print("\n[Invalid choice! Please type 1 or 2.]")
 
     print("\n" + "=" * 55 + "\n")
-    typewriter("As you cross into the inner chamber, a heavy stone slab slams shut behind you.")
-    typewriter("In front of you lies a carved pedestal with strange inscriptions on it")
+    typewriter("As you cross into the inner chamber, a low rumbling sound grows louder")
+    typewriter("Suddenly, a strange looking creature appears in front of you!")
     print("\n" + "=" * 55 + "\n")
 
     if player_name == "gaby":
-        typewriter("You notice a small inscription on the pedestal that reads: 'I AM WATCHING YOU GABY.'")
-        typewriter("A shiver runs down your spine as you realize the cave knows your name.")
+        typewriter("Looking straight into your eyes, past the screen, the creature says 'I AM WATCHING YOU GABY.'")
+        typewriter("A shiver runs down your spine as you realize they know your name...")
 
 
 if __name__ == "__main__":
