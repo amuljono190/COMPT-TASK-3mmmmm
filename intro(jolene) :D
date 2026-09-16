@@ -1,1 +1,73 @@
-print("blablablablablabla")
+import sys
+import time
+
+def typewriter(text, speed=0.03):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(speed)
+    print()
+
+def start_intro():
+    print("=" * 55)
+    print(r"""
+      /\
+     /  \      /\_      GABY IS WATCHING YOU
+    /\/\/\    /    \     A Python Text Adventure -- Escape Room
+   /      \  /      \
+    """)
+    print("=" * 55 + "\n")
+
+    typewriter("Welcome, adventurer!!")
+    player_name = input("Enter your character's name: ").strip()
+    
+    while not player_name:
+        print("A name is required to continue.")
+        player_name = input("Enter your character's name: ").strip()
+
+    if player_name == "gaby":
+        typewriter("I'm watching you, gaby :p")
+
+    print("\n" + "-" * 55 + "\n")
+    typewriter(f"Greetings, {player_name}.")
+    typewriter("You stand before the entrance of a mysterious cave.")
+    typewriter("A chilling breeze comes from within the cave, echoing inside")
+    typewriter("Ahead, the entrance splits into two different passages.")
+    print("\n" + "-" * 55 + "\n")
+
+    while True:
+        print("\nWhich pathway will you take?")
+        print("1. Take the Left Tunnel (a narrow path lit by glowing blue moss)")
+        print("2. Take the Right Tunnel (a dark path that echoes with water drops)")
+
+        choice = input("\nEnter your choice (1 or 2): ").strip()
+
+        if choice == "1":
+            print()
+            typewriter("You step cautiously into the glowing left tunnel...")
+            typewriter("The moss provides just enough light to guide your steps safely forward.")
+            break
+        
+        elif choice == "2":
+            print()
+            typewriter("You enter the right tunnel, water dripping from stalactites echo through the darkness.")
+            typewriter("It's near pitch black and the passage grows steep underneath your feet.")
+            typewriter("Feeling around with only your hands, you suddenly hit a wall of fallen boulders - it's a dead end!")
+            typewriter("Having no way through, you carefully go back towards the cavern entrance.")
+            print("-" * 55)
+
+        else:
+            print("\n[Invalid choice! Please type 1 or 2.]")
+
+    print("\n" + "=" * 55 + "\n")
+    typewriter("As you cross into the inner chamber, a heavy stone slab slams shut behind you.")
+    typewriter("In front of you lies a carved pedestal with strange inscriptions on it")
+    print("\n" + "=" * 55 + "\n")
+
+    if player_name == "gaby":
+        typewriter("You notice a small inscription on the pedestal that reads: 'I AM WATCHING YOU GABY.'")
+        typewriter("A shiver runs down your spine as you realize the cave knows your name.")
+
+
+if __name__ == "__main__":
+    start_intro()
