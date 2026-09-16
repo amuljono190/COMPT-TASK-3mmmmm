@@ -66,7 +66,7 @@ while True:
 
     if player_score == 3:
         print("YOU DEFEATED THE MONSTER!")
-        print("You escape into the cave!")
+        print("You survived!!")
         break
 
     else:
