@@ -12,7 +12,7 @@ def start_intro():
     print("=" * 55)
     print(r"""
       /\
-     /  \      /\_      GABY IS WATCHING YOU
+     /  \      /\_      THE IJNAMUJ CAVES
     /\/\/\    /    \     A Python Text Adventure -- Escape Room
    /      \  /      \
     """)
@@ -24,9 +24,6 @@ def start_intro():
     while not player_name:
         print("A name is required to continue.")
         player_name = input("Enter your character's name: ").strip()
-
-    if player_name == "gaby":
-        typewriter("I'm watching you, gaby :p")
 
     print("\n" + "-" * 55 + "\n")
     typewriter(f"Greetings, {player_name}.")
@@ -63,11 +60,6 @@ def start_intro():
     typewriter("As you cross into the inner chamber, a low rumbling sound grows louder")
     typewriter("Suddenly, a strange looking creature appears in front of you!")
     print("\n" + "=" * 55 + "\n")
-
-    if player_name == "gaby":
-        typewriter("Looking straight into your eyes, past the screen, the creature says 'I AM WATCHING YOU GABY.'")
-        typewriter("A shiver runs down your spine as you realize they know your name...")
-
 
 if __name__ == "__main__":
     start_intro()
