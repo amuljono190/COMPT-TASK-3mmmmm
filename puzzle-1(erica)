@@ -87,4 +87,8 @@ while wrong_guesses < max_attempts:
     if len(guess) != 1 or not guess.isalpha():
         print("Please enter one letter.")
         input("Press Enter to continue...")
+        os.system('cls' if os.name == 'nt' else 'clear')
         continue
+
+    if guess in guessed:
+        print("You already guessed that letter.")
