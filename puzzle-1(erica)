@@ -86,22 +86,5 @@ while wrong_guesses < max_attempts:
 
     if len(guess) != 1 or not guess.isalpha():
         print("Please enter one letter.")
+        input("Press Enter to continue...")
         continue
-
-    if guess in guessed:
-        print("You already guessed that letter.")
-        continue
-
-    guessed.append(guess)
-
-    if guess in word:
-        print("Correct guess!")
-    else:
-        wrong_guesses += 1
-        print("Wrong guess!")
-
-else:
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print(hangman[-1])
-    print("Game Over!")
-    print("You failed to guess the word.")
