@@ -1,4 +1,5 @@
 import random
+import os
 
 words = ["apple", "banana", "mango", "orange", "grapes", "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
 
@@ -71,6 +72,8 @@ while wrong_guesses < max_attempts:
         else:
             display += "_ "
 
+    os.system('cls' if os.name == 'nt' else 'clear')
+
     print(hangman[wrong_guesses])
     print("Word:", display)
 
@@ -98,6 +101,7 @@ while wrong_guesses < max_attempts:
         print("Wrong guess!")
 
 else:
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(hangman[-1])
     print("Game Over!")
     print("You failed to guess the word.")
