@@ -1,12 +1,14 @@
 import random
 import os
 
-words = ["apple", "banana", "mango", "orange", "grapes", "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
+words = ["apple", "banana", "mango", "orange", "grapes",
+         "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
 
 word = random.choice(words)
 guessed = []
 wrong_guesses = 0
 max_attempts = 6
+message = "Guess a letter:"
 
 hangman = [
     """
@@ -59,10 +61,14 @@ hangman = [
     """
 ]
 
-print("Guess the word!")
-print("Hint: The word is a fruit.")
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 while wrong_guesses < max_attempts:
+
+    clear_screen()
 
     display = ""
 
@@ -72,23 +78,36 @@ while wrong_guesses < max_attempts:
         else:
             display += "_ "
 
-    os.system('cls' if os.name == 'nt' else 'clear')
-
     print(hangman[wrong_guesses])
     print("Word:", display)
+    print(message)
 
     if "_" not in display:
-        print("Congratulations! You won!")
+        print("\nCongratulations! You won!")
         print("You completed the puzzle and can now proceed to the next room.")
         break
 
-    guess = input("Guess a letter: ").lower()
+    guess = input("\nEnter a letter: ").lower()
 
     if len(guess) != 1 or not guess.isalpha():
-        print("Please enter one letter.")
-        input("Press Enter to continue...")
-        os.system('cls' if os.name == 'nt' else 'clear')
+        message = "Please enter one letter."
         continue
 
     if guess in guessed:
-        print("You already guessed that letter.")
+        message = "You already guessed that letter."
+        continue
+
+    guessed.append(guess)
+
+    if guess in word:
+        message = "Correct guess!"
+    else:
+        wrong_guesses += 1
+        message = "Wrong guess!"
+
+else:
+    clear_screen()
+    print(hangman[-1])
+    print("Word:", " ".join(word))
+    print("Game Over!")
+    print("You failed to guess the word.")
