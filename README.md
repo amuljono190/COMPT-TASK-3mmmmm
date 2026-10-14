@@ -1,4 +1,227 @@
 # COMPT-TASK-3mmmmmbbbb
+
+import random
+
+words = ["apple", "banana", "mango", "orange", "grapes", "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
+
+word = random.choice(words)
+guessed = []
+wrong_guesses = 0
+max_attempts = 6
+
+hangman = [
+    """
+     -----
+     |   |
+         |
+         |
+         |
+    =========
+    """,
+    """
+     -----
+     |   |
+     O   |
+         |
+         |
+    =========
+    """,
+    """
+     -----
+     |   |
+     O   |
+     |   |
+         |
+    =========
+    """,
+    """
+     -----
+     |   |
+     O   |
+    /|\\  |
+         |
+    =========
+    """,
+    """
+     -----
+     |   |
+     O   |
+    /|\\  |
+    /    |
+    =========
+    """,
+    """
+     -----
+     |   |
+     O   |
+    /|\\  |
+    / \\  |
+    =========
+    """
+]
+
+print("Guess the word!")
+print("Hint: The word is a fruit.")
+
+while wrong_guesses < max_attempts:
+
+    display = ""
+
+    for letter in word:
+        if letter in guessed:
+            display += letter + " "
+        else:
+            display += "_ "
+
+    print(hangman[wrong_guesses])
+    print("Word:", display)
+
+    if "_" not in display:
+        print("Congratulations! You won!")
+        print("You completed the puzzle and can now proceed to the next room.")
+        break
+
+    guess = input("Guess a letter: ").lower()
+
+    if len(guess) != 1 or not guess.isalpha():
+        print("Please enter one letter.")
+        continue
+
+    if guess in guessed:
+        print("You already guessed that letter.")
+        continue
+
+    guessed.append(guess)
+
+    if guess in word:
+        print("Correct guess!")
+    else:
+        wrong_guesses += 1
+        print("Wrong guess!")
+
+else:
+    print(hangman[-1])
+    print("Game Over!")
+    print("You failed to guess the word.")
+
+import random
+
+def print_board(board):
+    """Displays the 3x3 grid state."""
+    print(f"\n {board[0]} | {board[1]} | {board[2]} ")
+    print("---|---|---")
+    print(f" {board[3]} | {board[4]} | {board[5]} ")
+    print("---|---|---")
+    print(f" {board[6]} | {board[7]} | {board[8]} \n")
+
+def check_win(board, player):
+    """Verifies row, column, and diagonal wins."""
+    win_conditions = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],  # Columns
+        [0, 4, 8], [2, 4, 6]              # Diagonals
+    ]
+    return any(all(board[cell] == player for cell in combo) for combo in win_conditions)
+
+def is_board_full(board):
+    """Returns True if no empty spaces are left."""
+    return all(cell in ['X', 'O'] for cell in board)
+
+def get_computer_move(board, computer, human):
+    """Executes AI logic: Win, Block, or pick best strategic cell."""
+    # 1. Check if computer can win in the next move
+    for i in range(9):
+        if board[i] not in ['X', 'O']:
+            board_copy = board.copy()
+            board_copy[i] = computer
+            if check_win(board_copy, computer):
+                return i
+
+    # 2. Check if human can win and block them
+    for i in range(9):
+        if board[i] not in ['X', 'O']:
+            board_copy = board.copy()
+            board_copy[i] = human
+            if check_win(board_copy, human):
+                return i
+
+    # 3. Take the center if available
+    if board[4] not in ['X', 'O']:
+        return 4
+
+    # 4. Take available corners
+    corners = [0, 2, 6, 8]
+    available_corners = [i for i in corners if board[i] not in ['X', 'O']]
+    if available_corners:
+        return random.choice(available_corners)
+
+    # 5. Take available sides
+    sides = [1, 3, 5, 7]
+    available_sides = [i for i in sides if board[i] not in ['X', 'O']]
+    return random.choice(available_sides)
+
+def play_game():
+    """Manages the main game loop."""
+    # Initialize the board with positions 1-9
+    board = [str(i) for i in range(1, 10)]
+    human = 'X'
+    computer = 'O'
+    
+    print("Welcome to Tic-Tac-Toe!")
+    print("You are 'X' and the computer is 'O'.")
+    print_board(board)
+
+    while True:
+        # --- Human Turn ---
+        while True:
+            try:
+                move = int(input("Choose a position (1-9): ")) - 1
+                if 0 <= move <= 8 and board[move] not in ['X', 'O']:
+                    board[move] = human
+                    break
+                else:
+                    print("Invalid move. Spot already taken or out of range.")
+            except ValueError:
+                print("Please enter a valid number between 1 and 9.")
+
+        print_board(board)
+        
+        if check_win(board, human):
+            print("Congratulations! You won!")
+            break
+        if is_board_full(board):
+            print("It's a draw!")
+            break
+
+        print("Computer is thinking...")
+        comp_move = get_computer_move(board, computer, human)
+        board[comp_move] = computer
+        print_board(board)
+
+        if check_win(board, computer):
+            print("Computer wins! Better luck next time.")
+            break
+        if is_board_full(board):
+            print("It's a draw!")
+            break
+
+if __name__ == "__main__":
+    play_game()
+
+
+
+
+
+
+
+choice = input("Do you want to play again? (y/n): ").strip().lower()
+
+if choice == 'y':
+    print("\nRestarting the game...\n")
+    # Add your game restart code or function here
+else:
+    print("\nGoodbye! Have a great day.")
+
 print("hello world")
 def game_over(score):
     print("\n" + "=" * 30)
