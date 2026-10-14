@@ -1,111 +1,127 @@
 import random
 import os
 
-words = ["apple", "banana", "mango", "orange", "grapes", "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
+def play_hangman():
+    # List of words for the hangman game for the player to guess
+    words = ["apple", "banana", "mango", "orange", "grapes",
+             "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
 
-word = random.choice(words)
-guessed = []
-wrong_guesses = 0
-max_attempts = 6
+    word = random.choice(words)
+    guessed = []
+    wrong_guesses = 0
+    max_attempts = 6
 
-hangman = [
-    """
-     -----
-     |   |
-         |
-         |
-         |
-    =========
-    """,
-    """
-     -----
-     |   |
-     O   |
-         |
-         |
-    =========
-    """,
-    """
-     -----
-     |   |
-     O   |
-     |   |
-         |
-    =========
-    """,
-    """
-     -----
-     |   |
-     O   |
-    /|\\  |
-         |
-    =========
-    """,
-    """
-     -----
-     |   |
-     O   |
-    /|\\  |
-    /    |
-    =========
-    """,
-    """
-     -----
-     |   |
-     O   |
-    /|\\  |
-    / \\  |
-    =========
-    """
-]
+    # Visual hangman stages for each wrong guess
+    hangman = [
+        """
+         -----
+         |   |
+             |
+             |
+             |
+        =========
+        """,
+        """
+         -----
+         |   |
+         O   |
+             |
+             |
+        =========
+        """,
+        """
+         -----
+         |   |
+         O   |
+         |   |
+             |
+        =========
+        """,
+        """
+         -----
+         |   |
+         O   |
+        /|\\  |
+             |
+        =========
+        """,
+        """
+         -----
+         |   |
+         O   |
+        /|\\  |
+        /    |
+        =========
+        """,
+        """
+         -----
+         |   |
+         O   |
+        /|\\  |
+        / \\  |
+        =========
+        """
+    ]
 
-print("Guess the word!")
-print("Hint: The word is a fruit.")
+    print("Guess the word!")
+    print("Hint: The word is a fruit.")
 
-while wrong_guesses < max_attempts:
+    # Keep playing while the player has attempts remaining
+    while wrong_guesses < max_attempts:
 
-    display = ""
+        display = ""
 
-    for letter in word:
-        if letter in guessed:
-            display += letter + " "
+        # Show guessed letters and blanks for letters not yet guessed
+        for letter in word:
+            if letter in guessed:
+                display += letter + " "
+            else:
+                display += "_ "
+
+        # Clear the screen before showing the updated game
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        print(hangman[wrong_guesses])
+        print("Word:", display)
+
+        # Check whether the player has guessed every letter
+        if "_" not in display:
+            print("Congratulations! You won!")
+            print("You completed the puzzle and can now proceed to the next room.")
+            return True
+
+        # Ask the player to enter a letter
+        guess = input("Guess a letter: ").lower()
+
+        # Check that the input contains exactly one letter
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter one letter.")
+            input("Press Enter to continue...")
+            continue
+
+        # Check whether the player has already guessed the letter
+        if guess in guessed:
+            print("You already guessed that letter.")
+            input("Press Enter to continue...")
+            continue
+
+        # Save the new guess
+        guessed.append(guess)
+
+        # Check whether the guessed letter is in the word
+        if guess in word:
+            print("Correct guess!")
         else:
-            display += "_ "
+            wrong_guesses = wrong_guesses + 1
+            print("Wrong guess!")
 
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-    print(hangman[wrong_guesses])
-    print("Word:", display)
-
-    if "_" not in display:
-        print("Congratulations! You won!")
-        print("You completed the puzzle and can now proceed to the next room.")
-        break
-
-    guess = input("Guess a letter: ").lower()
-
-    if len(guess) != 1 or not guess.isalpha():
-        print("Please enter one letter.")
         input("Press Enter to continue...")
-        continue
 
-    if guess in guessed:
-        print("You already guessed that letter.")
-        input("Press Enter to continue...")
-        continue
-
-    guessed.append(guess)
-
-    if guess in word:
-        print("Correct guess!")
-    else:
-        wrong_guesses += 1
-        print("Wrong guess!")
-
-    input("Press Enter to continue...")
-
-else:
+    # Display the final hangman and end the game if attempts run out
     os.system('cls' if os.name == 'nt' else 'clear')
     print(hangman[-1])
     print("Game Over!")
     print("You failed to guess the word.")
+    print("The word was:", word)
+
+    return False
