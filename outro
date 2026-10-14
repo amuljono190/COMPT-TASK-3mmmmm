@@ -1,0 +1,23 @@
+# Function to display the game over screen and final score
+def game_over(score):
+    print("\n" + "=" * 30)
+    print("          GAME OVER")
+    print("=" * 30)
+    print(f"Your final score is: {score}")
+    print("Thank you for playing!\n")
+
+    # Ask the player if they want to play again
+    choice = input("Do you want to play again? (y/n): ").strip().lower()
+
+    # Check the player's choice
+    if choice == 'y':
+        print("\nRestarting the game...\n")
+        return True
+    else:
+        print("\nGoodbye! Have a great day.")
+        return False
+
+
+# Example usage
+final_score = 1250
+play_again = game_over(final_score)
