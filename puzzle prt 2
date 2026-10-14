@@ -1,77 +1,95 @@
 import random
 
-while True:
 
+def play_rps():
+    """Runs Rock Paper Scissors and returns True when the player wins."""
+
+    # Stores the three possible choices available in the game.
     choices = ["rock", "paper", "scissors"]
 
-    player_score = 0
-    monster_score = 0
+    # Restarts the match if the monster wins.
+    while True:
 
-    print("ROCK PAPER SCISSORS")
-    print("You are fighting the monster!")
-    print("First to 3 points wins!")
-    print()
+        # Resets both scores at the beginning of every new match.
+        player_score = 0
+        monster_score = 0
 
-    while player_score < 3 and monster_score < 3:
+        print("ROCK PAPER SCISSORS")
+        print("You are fighting the monster!")
+        print("First to 3 points wins!")
+        print()
 
-        print("Choose:")
-        print("1. Rock")
-        print("2. Paper")
-        print("3. Scissors")
+        # Continues the match until one side reaches three points.
+        while player_score < 3 and monster_score < 3:
 
-        player_choice = input("Enter 1, 2, or 3: ")
+            # Displays the player's available choices.
+            print("Choose:")
+            print("1. Rock")
+            print("2. Paper")
+            print("3. Scissors")
 
-        if player_choice == "1":
-            player = "rock"
-        elif player_choice == "2":
-            player = "paper"
-        elif player_choice == "3":
-            player = "scissors"
-        else:
-            print("Invalid choice. Try again!")
+            # Gets the player's choice.
+            player_choice = input("Enter 1, 2, or 3: ").strip()
+
+            # Converts the player's number into the corresponding choice.
+            if player_choice == "1":
+                player = "rock"
+            elif player_choice == "2":
+                player = "paper"
+            elif player_choice == "3":
+                player = "scissors"
+            else:
+                # Invalid inputs do not count as a round.
+                print("Invalid choice. Try again!\n")
+                continue
+
+            # Randomly selects the monster's choice.
+            monster = random.choice(choices)
+
+            # Displays both choices so the player can see the result.
             print()
-            continue
+            print("You chose:", player)
+            print("The monster chose:", monster)
+            print()
 
-        monster = random.choice(choices)
+            # Checks whether both players chose the same option.
+            if player == monster:
+                print("It's a tie!")
 
-        print()
-        print("You chose:", player)
-        print("The monster chose:", monster)
-        print()
+            # Checks whether the player's choice beats the monster's choice.
+            elif (
+                (player == "rock" and monster == "scissors")
+                or (player == "paper" and monster == "rock")
+                or (player == "scissors" and monster == "paper")
+            ):
+                print(f"{player.capitalize()} beats {monster}! You win!")
+                player_score += 1
 
-        if player == monster:
-            print("It's a tie!")
+            # If neither a tie nor a player win occurs, the monster wins.
+            else:
+                print("The monster wins!")
+                monster_score += 1
 
-        elif player == "rock" and monster == "scissors":
-            print("Rock beats scissors! You win!")
-            player_score = player_score + 1
+            # Displays the updated scores after each round.
+            print()
+            print("Your score:", player_score)
+            print("Monster score:", monster_score)
+            print("--------------------------------")
+            print()
 
-        elif player == "paper" and monster == "rock":
-            print("Paper beats rock! You win!")
-            player_score = player_score + 1
+        # Checks whether the player has reached three points first.
+        if player_score == 3:
+            print("YOU DEFEATED THE MONSTER!")
+            print("You can now proceed to the next chamber!")
+            return True
 
-        elif player == "scissors" and monster == "paper":
-            print("Scissors beats paper! You win!")
-            player_score = player_score + 1
-
+        # If the monster wins, the outer loop starts another match.
         else:
-            print("The monster wins!")
-            monster_score = monster_score + 1
+            print("THE MONSTER DEFEATED YOU!")
+            print("The monster catches you...")
+            print("\nThe game is restarting...\n")
 
-        print()
-        print("Your score:", player_score)
-        print("Monster score:", monster_score)
-        print("--------------------------------")
-        print()
 
-    if player_score == 3:
-        print("YOU DEFEATED THE MONSTER!")
-        print("You escape into the cave!")
-        break
-
-    else:
-        print("THE MONSTER DEFEATED YOU!")
-        print("The monster catches you...")
-        print()
-        print("The game is restarting...")
-        print()
+# Allows Rock Paper Scissors to be tested independently.
+if __name__ == "__main__":
+    play_rps()
