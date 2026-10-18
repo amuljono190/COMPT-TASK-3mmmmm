@@ -1,37 +1,35 @@
 import random
+import os
+
+
+def clear_screen():
+    """Clears the terminal screen."""
+    os.system("cls" if os.name == "nt" else "clear")
 
 
 def play_rps():
     """Runs Rock Paper Scissors and returns True when the player wins."""
 
-    # Stores the three possible choices available in the game.
     choices = ["rock", "paper", "scissors"]
 
-    # Restarts the match if the monster wins.
     while True:
-
-        # Resets both scores at the beginning of every new match.
         player_score = 0
         monster_score = 0
 
+        clear_screen()
         print("ROCK PAPER SCISSORS")
         print("You are fighting the monster!")
         print("First to 3 points wins!")
         print()
 
-        # Continues the match until one side reaches three points.
         while player_score < 3 and monster_score < 3:
-
-            # Displays the player's available choices.
             print("Choose:")
             print("1. Rock")
             print("2. Paper")
             print("3. Scissors")
 
-            # Gets the player's choice.
             player_choice = input("Enter 1, 2, or 3: ").strip()
 
-            # Converts the player's number into the corresponding choice.
             if player_choice == "1":
                 player = "rock"
             elif player_choice == "2":
@@ -39,24 +37,19 @@ def play_rps():
             elif player_choice == "3":
                 player = "scissors"
             else:
-                # Invalid inputs do not count as a round.
                 print("Invalid choice. Try again!\n")
                 continue
 
-            # Randomly selects the monster's choice.
             monster = random.choice(choices)
 
-            # Displays both choices so the player can see the result.
             print()
             print("You chose:", player)
             print("The monster chose:", monster)
             print()
 
-            # Checks whether both players chose the same option.
             if player == monster:
                 print("It's a tie!")
 
-            # Checks whether the player's choice beats the monster's choice.
             elif (
                 (player == "rock" and monster == "scissors")
                 or (player == "paper" and monster == "rock")
@@ -65,31 +58,42 @@ def play_rps():
                 print(f"{player.capitalize()} beats {monster}! You win!")
                 player_score += 1
 
-            # If neither a tie nor a player win occurs, the monster wins.
             else:
                 print("The monster wins!")
                 monster_score += 1
 
-            # Displays the updated scores after each round.
+            print()
+            print("Your score:", player_score)
+            print("Monster score:", monster_score)
+            print("--------------------------------")
+
+            # Wait for the player to read the result.
+            input("\nPress Enter to continue to the next round...")
+
+            # Clear the board before the next round.
+            clear_screen()
+
+            # Display the game title and current scores again.
+            print("ROCK PAPER SCISSORS")
+            print("You are fighting the monster!")
+            print("First to 3 points wins!")
             print()
             print("Your score:", player_score)
             print("Monster score:", monster_score)
             print("--------------------------------")
             print()
 
-        # Checks whether the player has reached three points first.
         if player_score == 3:
             print("YOU DEFEATED THE MONSTER!")
             print("You can now proceed to the next chamber!")
             return True
 
-        # If the monster wins, the outer loop starts another match.
         else:
             print("THE MONSTER DEFEATED YOU!")
             print("The monster catches you...")
-            print("\nThe game is restarting...\n")
+            input("\nPress Enter to restart the game...")
+            clear_screen()
 
 
-# Allows Rock Paper Scissors to be tested independently.
 if __name__ == "__main__":
     play_rps()
