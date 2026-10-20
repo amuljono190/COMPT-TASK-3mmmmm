@@ -1,99 +1,164 @@
+
 import random
 import os
 
 
+# Clears the terminal screen.
 def clear_screen():
-    """Clears the terminal screen."""
     os.system("cls" if os.name == "nt" else "clear")
 
 
-def play_rps():
-    """Runs Rock Paper Scissors and returns True when the player wins."""
+def play_game():
+    # Create an empty board for Tic-Tac-Toe.
+    board = [" "] * 9
 
-    choices = ["rock", "paper", "scissors"]
-
-    while True:
-        player_score = 0
-        monster_score = 0
-
-        clear_screen()
-        print("ROCK PAPER SCISSORS")
-        print("You are fighting the monster!")
-        print("First to 3 points wins!")
+    # Display the Tic-Tac-Toe board.
+    def display_board():
+        print()
+        print(" " + board[0] + " | " + board[1] + " | " + board[2])
+        print("---+---+---")
+        print(" " + board[3] + " | " + board[4] + " | " + board[5])
+        print("---+---+---")
+        print(" " + board[6] + " | " + board[7] + " | " + board[8])
         print()
 
-        while player_score < 3 and monster_score < 3:
-            print("Choose:")
-            print("1. Rock")
-            print("2. Paper")
-            print("3. Scissors")
+    # Check whether a player has won.
+    def check_winner(symbol):
+        winning_combinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ]
 
-            player_choice = input("Enter 1, 2, or 3: ").strip()
+        for combination in winning_combinations:
+            if all(board[position] == symbol for position in combination):
+                return True
 
-            if player_choice == "1":
-                player = "rock"
-            elif player_choice == "2":
-                player = "paper"
-            elif player_choice == "3":
-                player = "scissors"
-            else:
-                print("Invalid choice. Try again!\n")
+        return False
+
+    # Find a winning move or a move to block the player.
+    def find_best_move(symbol):
+        for position in range(9):
+            if board[position] == " ":
+                board[position] = symbol
+
+                if check_winner(symbol):
+                    board[position] = " "
+                    return position
+
+                board[position] = " "
+
+        return None
+
+    # Keep playing rounds until the player wins.
+    while True:
+        board = [" "] * 9
+
+        clear_screen()
+        print("Welcome to Puzzle 3: Tic-Tac-Toe!")
+        print("You are X and the computer is O.")
+        print("Choose a position from 1 to 9.")
+
+        # Continue playing until this round ends.
+        while True:
+            display_board()
+
+            # Ask the player to choose a position.
+            try:
+                move = int(input("Choose a position (1-9): ")) - 1
+            except ValueError:
+                print("Please enter a number from 1 to 9.")
+                input("Press Enter to try again...")
+                clear_screen()
+                print("Welcome to Puzzle 3: Tic-Tac-Toe!")
+                print("You are X and the computer is O.")
                 continue
 
-            monster = random.choice(choices)
+            # Check that the position is valid and empty.
+            if move < 0 or move > 8 or board[move] != " ":
+                print("Invalid move! Choose an empty position from 1 to 9.")
+                input("Press Enter to try again...")
+                clear_screen()
+                print("Welcome to Puzzle 3: Tic-Tac-Toe!")
+                print("You are X and the computer is O.")
+                continue
 
-            print()
-            print("You chose:", player)
-            print("The monster chose:", monster)
-            print()
+            # Place the player's symbol on the board.
+            board[move] = "X"
 
-            if player == monster:
-                print("It's a tie!")
+            # Check whether the player has won.
+            if check_winner("X"):
+                clear_screen()
+                print("Welcome to Puzzle 3: Tic-Tac-Toe!")
+                display_board()
+                print("Congratulations! You beat the computer!")
+                print("You can proceed to the next room.")
+                return True
 
-            elif (
-                (player == "rock" and monster == "scissors")
-                or (player == "paper" and monster == "rock")
-                or (player == "scissors" and monster == "paper")
-            ):
-                print(f"{player.capitalize()} beats {monster}! You win!")
-                player_score += 1
+            # Check whether the board is full after the player's move.
+            if all(space != " " for space in board):
+                print("It's a tie! Starting a new round...")
+                input("Press Enter to continue...")
+                break
 
-            else:
-                print("The monster wins!")
-                monster_score += 1
-
-            print()
-            print("Your score:", player_score)
-            print("Monster score:", monster_score)
-            print("--------------------------------")
-
-            # Wait for the player to read the result.
-            input("\nPress Enter to continue to the next round...")
-
-            # Clear the board before the next round.
+            # Clear the screen before the computer's turn.
             clear_screen()
+            print("Welcome to Puzzle 3: Tic-Tac-Toe!")
+            print("You are X and the computer is O.")
+            display_board()
 
-            # Display the game title and current scores again.
-            print("ROCK PAPER SCISSORS")
-            print("You are fighting the monster!")
-            print("First to 3 points wins!")
-            print()
-            print("Your score:", player_score)
-            print("Monster score:", monster_score)
-            print("--------------------------------")
-            print()
+            # Computer tries to win first.
+            computer_move = find_best_move("O")
 
-        if player_score == 3:
-            print("YOU DEFEATED THE MONSTER!")
-            print("You can now proceed to the next chamber!")
-            return True
+            # If the computer cannot win, try to block the player.
+            if computer_move is None:
+                computer_move = find_best_move("X")
 
-        else:
-            print("THE MONSTER DEFEATED YOU!")
-            print("The monster catches you...")
-            input("\nPress Enter to restart the game...")
+            # If there is no winning or blocking move, choose a position.
+            if computer_move is None:
+                if board[4] == " ":
+                    computer_move = 4
+                else:
+                    available_corners = [
+                        position for position in [0, 2, 6, 8]
+                        if board[position] == " "
+                    ]
+
+                    if available_corners:
+                        computer_move = random.choice(available_corners)
+                    else:
+                        available_positions = [
+                            position for position in range(9)
+                            if board[position] == " "
+                        ]
+                        computer_move = random.choice(available_positions)
+
+            # Place the computer's symbol on the board.
+            board[computer_move] = "O"
+
+            # Check whether the computer has won.
+            if check_winner("O"):
+                clear_screen()
+                print("Welcome to Puzzle 3: Tic-Tac-Toe!")
+                display_board()
+                print("The computer won! Starting a new round...")
+                input("Press Enter to continue...")
+                break
+
+            # Check whether the board is full after the computer's move.
+            if all(space != " " for space in board):
+                clear_screen()
+                print("It's a tie! Starting a new round...")
+                input("Press Enter to continue...")
+                break
+
+            # Clear the screen after the computer's turn.
             clear_screen()
+            print("Welcome to Puzzle 3: Tic-Tac-Toe!")
+            print("You are X and the computer is O.")
+            print("The computer chose position", computer_move + 1)
 
 
+# Runs the game when this file is executed directly.
 if __name__ == "__main__":
-    play_rps()
+    play_game()
