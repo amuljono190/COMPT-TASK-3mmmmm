@@ -1,7 +1,8 @@
+
 import sys
 import time
 
-# Imports the three puzzle functions from their separate Python files.
+# Import the puzzle functions and ending.
 from puzzle1 import play_hangman
 from puzzle2 import play_rps
 from puzzle3 import play_game
@@ -23,10 +24,10 @@ def start_intro():
     # Displays the title and cave artwork.
     print("=" * 55)
     print(r"""
-      /\
-     /  \      /\_      THE IJNAMUJ CAVES
-    /\/\/\    /    \     A Python Text Adventure -- Escape Room
-   /      \  /      \
+      /\    
+     /  \       THE IJNAMUJ CAVES
+    / /\ \      A Python Text Adventure
+   /_/  \_\     Escape Room
     """)
     print("=" * 55 + "\n")
 
@@ -34,12 +35,11 @@ def start_intro():
     typewriter("Welcome, adventurer!!")
     player_name = input("Enter your character's name: ").strip()
 
-    # Repeats the question until the player enters a name.
     while not player_name:
         print("A name is required to continue.")
         player_name = input("Enter your character's name: ").strip()
 
-    # Introduces the cave and describes the two passages.
+    # Introduces the cave.
     print("\n" + "-" * 55 + "\n")
     typewriter(f"Greetings, {player_name}.")
     typewriter("You stand before the entrance of a mysterious cave.")
@@ -56,7 +56,6 @@ def start_intro():
         choice = input("\nEnter your choice (1 or 2): ").strip()
 
         if choice == "1":
-            # The left tunnel leads towards the puzzles.
             print()
             typewriter("You step cautiously into the glowing left tunnel...")
             typewriter(
@@ -65,7 +64,6 @@ def start_intro():
             break
 
         elif choice == "2":
-            # The right tunnel is a dead end, so the player returns.
             print()
             typewriter(
                 "You enter the right tunnel, water dripping from stalactites "
@@ -84,45 +82,59 @@ def start_intro():
             print("-" * 55)
 
         else:
-            # Rejects any input other than 1 or 2.
             print("\n[Invalid choice! Please type 1 or 2.]")
 
-    # Introduces the creature guarding the cave.
+    # Introduces the chambers.
     print("\n" + "=" * 55 + "\n")
-    typewriter("As you cross into the inner chamber, a sharp pain appears in your stomach.")
-    typewriter("you see three chambers, with the first showing a stone carving of an apple.")
+    typewriter(
+        "As you cross into the inner chamber, a sharp pain appears in your stomach."
+    )
+    typewriter(
+        "You see three chambers, with the first showing a stone carving of an apple."
+    )
     print("\n" + "=" * 55 + "\n")
 
     typewriter(
-        f"{player_name}, to obtain food, you must solve the first puzzle"
+        f"{player_name}, to obtain food, you must solve the first puzzle."
     )
 
     # PUZZLE 1: Hangman.
-    # The game continues only if the player guesses the fruit correctly.
     input("\nPress Enter to begin Puzzle 1...")
     print("\n" + "=" * 55)
     print("PUZZLE 1: THE FRUIT WORD")
     print("=" * 55)
+
     play_hangman()
 
     # PUZZLE 2: Rock Paper Scissors.
-    # The player must defeat the monster to unlock the next chamber.
     input("\nPress Enter to begin Puzzle 2...")
     print("\n" + "=" * 55)
     print("PUZZLE 2: THE MONSTER'S CHALLENGE")
     print("=" * 55)
-    play_rps()
+
+    # Stop the story if the player loses Puzzle 2.
+    if not play_rps():
+        print("\n" + "=" * 55)
+        print("YOU HAVE BEEN DEFEATED!")
+        print("The monster sends you back to the beginning of the cave.")
+        print("=" * 55)
+        return
 
     # PUZZLE 3: Tic-Tac-Toe.
-    # The player must beat the computer to complete the escape room.
     input("\nPress Enter to begin Puzzle 3...")
     print("\n" + "=" * 55)
     print("PUZZLE 3: THE FINAL GRID")
     print("=" * 55)
-    play_game()
 
-        # Starts the ending after Puzzle 3 finishes.
+    # Stop if Puzzle 3 is lost, provided play_game returns False on a loss.
+    result = play_game()
+    if result is False:
+        print("\nYou failed the final puzzle. Your adventure ends here.")
+        return
+
+    # Ending only runs after the player completes all three puzzles.
     cave_ending(player_name)
+
 
 # Runs the introduction when this file is started.
 if __name__ == "__main__":
