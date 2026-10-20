@@ -1,3 +1,17 @@
+
+import sys
+import time
+
+
+def typewriter(text, speed=0.03):
+    """Displays text one character at a time."""
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(speed)
+    print()
+
+
 def cave_ending(player_name):
     """Controls the final choice and ending of the escape room."""
 
@@ -26,12 +40,10 @@ def cave_ending(player_name):
 
     # Describes the two possible paths.
     typewriter(
-        "The LEFT opening glows with warm golden light, "
-        "and a gentle breeze flows through it."
+        "The LEFT opening glows with warm golden light, and a gentle breeze flows through it."
     )
     typewriter(
-        "The RIGHT opening is covered in strange symbols, "
-        "while a deep rumbling echoes from within."
+        "The RIGHT opening is covered in strange symbols while a deep rumbling echoes from within."
     )
 
     print("\n" + "-" * 55)
@@ -54,15 +66,13 @@ def cave_ending(player_name):
                 "You cautiously enter the left opening, following the warm light."
             )
             typewriter(
-                "The narrow passage gradually widens, and the sound of birds "
-                "begins to echo through the tunnel."
+                "The narrow passage gradually widens, and the sound of birds begins to echo through the tunnel."
             )
             typewriter(
                 "After what feels like hours, you see sunlight shining ahead."
             )
             typewriter(
-                "You take your final steps and emerge from the cave "
-                "into the beautiful open air."
+                "You take your final steps and emerge from the cave into the beautiful open air."
             )
             typewriter(
                 f"Well done, {player_name}! You have escaped the Ijnamuj Caves!"
@@ -94,12 +104,10 @@ def cave_ending(player_name):
                 "Suddenly, a heavy stone door slams shut behind you!"
             )
             typewriter(
-                "You rush forward, but the passage splits into countless "
-                "identical tunnels."
+                "You rush forward, but the passage splits into countless identical tunnels."
             )
             typewriter(
-                "No matter which way you turn, every path leads you deeper "
-                "into the darkness."
+                "No matter which way you turn, every path leads you deeper into the darkness."
             )
             typewriter(
                 f"{player_name}, you have solved every puzzle, "
@@ -119,3 +127,7 @@ def cave_ending(player_name):
         else:
             # Rejects invalid choices and asks the player to try again.
             print("\n[Invalid choice! Please type 1 or 2.]")
+
+
+if __name__ == "__main__":
+    cave_ending("Explorer")
