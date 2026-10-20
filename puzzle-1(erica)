@@ -3,8 +3,7 @@ import os
 
 def play_hangman():
     # List of words for the hangman game for the player to guess
-    words = ["apple", "banana", "mango", "orange", "grapes",
-             "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
+    words = ["apple", "banana", "mango", "orange", "grapes", "strawberry", "kiwi", "watermelon", "pineapple", "peach"]
 
     word = random.choice(words)
     guessed = []
@@ -86,7 +85,7 @@ def play_hangman():
 
         # Check whether the player has guessed every letter
         if "_" not in display:
-            print("Congratulations! You won!")
+            print("Congratulations! You have won and successfully acquired food!")
             print("You completed the puzzle and can now proceed to the next room.")
             return True
 
@@ -121,7 +120,7 @@ def play_hangman():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(hangman[-1])
     print("Game Over!")
-    print("You failed to guess the word.")
+    print("You were starving and failed to guess the word.")
     print("The word was:", word)
 
     return False
