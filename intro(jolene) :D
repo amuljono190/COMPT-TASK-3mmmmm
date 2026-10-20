@@ -5,6 +5,7 @@ import time
 from puzzle1 import play_hangman
 from puzzle2 import play_rps
 from puzzle3 import play_game
+from ending import cave_ending
 
 
 def typewriter(text, speed=0.03):
@@ -102,8 +103,7 @@ def start_intro():
     print("\n" + "=" * 55)
     print("PUZZLE 1: THE FRUIT WORD")
     print("=" * 55)
-
-    typewriter("\nThe first door opens! You enter the next chamber.")
+    play_hangman()
 
     # PUZZLE 2: Rock Paper Scissors.
     # The player must defeat the monster to unlock the next chamber.
@@ -111,8 +111,7 @@ def start_intro():
     print("\n" + "=" * 55)
     print("PUZZLE 2: THE MONSTER'S CHALLENGE")
     print("=" * 55)
-
-    typewriter("\nThe monster steps aside and reveals another passage!")
+    play_rps()
 
     # PUZZLE 3: Tic-Tac-Toe.
     # The player must beat the computer to complete the escape room.
@@ -120,7 +119,11 @@ def start_intro():
     print("\n" + "=" * 55)
     print("PUZZLE 3: THE FINAL GRID")
     print("=" * 55)
+    play_game()
 
-# Starts the introduction when this file is run directly.
+        # Starts the ending after Puzzle 3 finishes.
+    cave_ending(player_name)
+
+# Runs the introduction when this file is started.
 if __name__ == "__main__":
     start_intro()
