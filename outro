@@ -1,23 +1,121 @@
-# Function to display the game over screen and final score
-def game_over(score):
-    print("\n" + "=" * 30)
-    print("          GAME OVER")
-    print("=" * 30)
-    print(f"Your final score is: {score}")
-    print("Thank you for playing!\n")
+def cave_ending(player_name):
+    """Controls the final choice and ending of the escape room."""
 
-    # Ask the player if they want to play again
-    choice = input("Do you want to play again? (y/n): ").strip().lower()
+    # Introduces the final chamber after all three puzzles are completed.
+    print("\n" + "=" * 55)
+    print("THE FINAL CHAMBER")
+    print("=" * 55 + "\n")
 
-    # Check the player's choice
-    if choice == 'y':
-        print("\nRestarting the game...\n")
-        return True
-    else:
-        print("\nGoodbye! Have a great day.")
-        return False
+    typewriter(
+        f"Congratulations, {player_name}! You have conquered all three puzzles."
+    )
+    typewriter(
+        "After your final victory, a hidden stone door slowly opens before you."
+    )
+    typewriter(
+        "You step through and discover a vast chamber deep within the caves."
+    )
+    typewriter(
+        "A faint breeze brushes against your face, and you hear the sound of water nearby."
+    )
+    typewriter(
+        "Looking ahead, you discover two openings carved into the cavern walls."
+    )
 
+    print("\n" + "-" * 55 + "\n")
 
-# Example usage
-final_score = 1250
-play_again = game_over(final_score)
+    # Describes the two possible paths.
+    typewriter(
+        "The LEFT opening glows with warm golden light, "
+        "and a gentle breeze flows through it."
+    )
+    typewriter(
+        "The RIGHT opening is covered in strange symbols, "
+        "while a deep rumbling echoes from within."
+    )
+
+    print("\n" + "-" * 55)
+
+    # Asks the player to choose a direction.
+    while True:
+        print("\nWhich opening will you choose?")
+        print("1. Enter the Left Opening (follow the golden light)")
+        print("2. Enter the Right Opening (investigate the strange symbols)")
+
+        choice = input("\nEnter your choice (1 or 2): ").strip()
+
+        # GOOD ENDING: The left opening leads outside the cave.
+        if choice == "1":
+            print("\n" + "=" * 55)
+            print("GOOD ENDING: FREEDOM AT LAST")
+            print("=" * 55 + "\n")
+
+            typewriter(
+                "You cautiously enter the left opening, following the warm light."
+            )
+            typewriter(
+                "The narrow passage gradually widens, and the sound of birds "
+                "begins to echo through the tunnel."
+            )
+            typewriter(
+                "After what feels like hours, you see sunlight shining ahead."
+            )
+            typewriter(
+                "You take your final steps and emerge from the cave "
+                "into the beautiful open air."
+            )
+            typewriter(
+                f"Well done, {player_name}! You have escaped the Ijnamuj Caves!"
+            )
+            typewriter(
+                "With all three puzzles behind you, you are finally free."
+            )
+
+            print("\n" + "=" * 55)
+            print("         CONGRATULATIONS! YOU ESCAPED!")
+            print("=" * 55)
+
+            # Ends the game after the successful escape.
+            break
+
+        # ALTERNATE ENDING: The right opening leads to a trap.
+        elif choice == "2":
+            print("\n" + "=" * 55)
+            print("ALTERNATE ENDING: LOST IN THE DARK")
+            print("=" * 55 + "\n")
+
+            typewriter(
+                "Curious about the strange symbols, you step into the right opening."
+            )
+            typewriter(
+                "The symbols begin to glow, and the ground trembles beneath your feet."
+            )
+            typewriter(
+                "Suddenly, a heavy stone door slams shut behind you!"
+            )
+            typewriter(
+                "You rush forward, but the passage splits into countless "
+                "identical tunnels."
+            )
+            typewriter(
+                "No matter which way you turn, every path leads you deeper "
+                "into the darkness."
+            )
+            typewriter(
+                f"{player_name}, you have solved every puzzle, "
+                "but the caves have one final secret."
+            )
+            typewriter(
+                "You are now trapped in the endless maze of the Ijnamuj Caves..."
+            )
+
+            print("\n" + "=" * 55)
+            print("               GAME OVER")
+            print("=" * 55)
+
+            # Ends the game after the alternate ending.
+            break
+
+        else:
+            # Rejects invalid choices and asks the player to try again.
+            print("\n[Invalid choice! Please type 1 or 2.]")
