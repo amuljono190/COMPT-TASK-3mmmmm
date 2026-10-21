@@ -74,10 +74,10 @@ def start_intro():
             )
             typewriter(
                 "Feeling around with only your hands, you suddenly hit a wall "
-                "of fallen boulders - it's a dead end!"
+                "Inspecting closer, you find a sliver of light, peeeking through a tiny crack of a rock."
             )
             typewriter(
-                "Having no way through, you carefully go back towards the cavern entrance."
+                "You push the loose rock and squeeze yourself through, entering into another chamber."
             )
             print("-" * 55)
 
