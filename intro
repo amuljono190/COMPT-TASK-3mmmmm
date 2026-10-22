@@ -5,7 +5,7 @@ import time
 from puzzle1 import play_hangman
 from puzzle2 import play_rps
 from puzzle3 import play_game
-from ending import cave_ending
+from outro import cave_ending
 
 
 def typewriter(text, speed=0.03):
