@@ -83,12 +83,6 @@ def play_hangman():
         print(hangman[wrong_guesses])
         print("Word:", display)
 
-        # Check whether the player has guessed every letter
-        if "_" not in display:
-            print("Congratulations! You have won and successfully acquired food!")
-            print("You completed the puzzle and can now proceed to the next room.")
-            return True
-
         # Ask the player to enter a letter
         guess = input("Guess a letter: ").lower()
 
@@ -110,6 +104,14 @@ def play_hangman():
         # Check whether the guessed letter is in the word
         if guess in word:
             print("Correct guess!")
+            # Check whether the player has guessed every letter
+            if all(char in guessed for char in word):
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print(hangman[wrong_guesses])
+                print("Word:", " ".join(word))
+                print("\nCongratulations! You have won and successfully acquired food!")
+                print("You completed the puzzle and can now proceed to the next room.")
+                return True
         else:
             wrong_guesses = wrong_guesses + 1
             print("Wrong guess!")
