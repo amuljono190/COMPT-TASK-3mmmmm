@@ -87,6 +87,9 @@ def play_game():
             if board[position] == " "
         ]
 
+        if not available_positions:
+            continue
+
         if random.random() < 0.2:
             winning_moves = []
 
